@@ -49,7 +49,21 @@ const followersArray = [];
 </div>
 
 */
+function createCard(info) {
+  //Create HTML elements
+  const card = document.querySelector("div");
+       image = document.querySelector("img");
+       cardInfo = document.querySelector("div");
+       name = document.querySelector("h3");
+       username = document.querySelector("p");
+       location = document.querySelector("p");
+       profile = document.querySelector("p");
+       url = document.querySelector("a");
+       followers = document.querySelector("p");
+       following = document.querySelector("p");
+       bio = document.querySelector("p");
 
+}
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
