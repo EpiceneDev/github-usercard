@@ -63,6 +63,18 @@ function createCard(info) {
        following = document.querySelector("p");
        bio = document.querySelector("p");
 
+  //Place elements
+  card.appendChild(image);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+  profile.appendChild(url);
+  //
 }
 /* List of LS Instructors Github username's: 
   tetondan
