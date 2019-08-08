@@ -58,7 +58,7 @@ function createCard(info) {
        username = document.querySelector("p");
        location = document.querySelector("p");
        profile = document.querySelector("p");
-       url = document.querySelector("a");
+       link = document.querySelector("a");
        followers = document.querySelector("p");
        following = document.querySelector("p");
        bio = document.querySelector("p");
@@ -73,8 +73,29 @@ function createCard(info) {
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
-  profile.appendChild(url);
-  //
+  profile.appendChild(link);
+
+  //Set classes
+  card.classList.add("card");
+  cardInfo.classList.add("card-info");
+  name.classList.add("name");
+  username.classList.add("username")
+
+  //Add content
+  image.src = data.data.avatar_url;
+  name.textContent = data.data.name;
+  username.textContent = data.data.login;
+  location.textContent = `Location: ${data.data.location}`
+  link.href = data.data.html_url;
+  link.textContent = data.data.html_url;
+  profile.textContent =`Profile: ${data.data.url}`
+  followers.textContent = `Followers: ${data.data.followers}`;
+  following.textContent = `Following: ${data.data.following}`;
+  bio.textContent = `Bio: ${data.data.bio}`;
+
+
+
+  return card;
 }
 /* List of LS Instructors Github username's: 
   tetondan
@@ -83,3 +104,4 @@ function createCard(info) {
   luishrd
   bigknell
 */
+document.querySelector(".cards").appendChild(card);
