@@ -2,10 +2,28 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+const followersArray = [
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell"];
 
-axios
+ 
+// ${item}.forEach(function(item) {
+// followersArray.forEach(function(element) {
+// axios
   .get(`https://api.github.com/users/epicenedev`)
-  .then(data => console.log("Card Info: ", data))
+  .then(data => {
+    // const followersArray = [...data.data.followers];
+    // console.log("followersArray: ", followersArray);
+    // const myArray = [...this.state.courses.map(blabla)];
+    // const newCard = createCard(data);
+    // document.querySelector(".cards").appendChild(card);
+    console.log("Card Info: ", data.data);
+  })
+// });
+  // .catch(err => console.log("REQUEST ERROR:  ", err));
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -28,8 +46,6 @@ axios
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -49,9 +65,9 @@ const followersArray = [];
 </div>
 
 */
-function createCard(info) {
+function createCard(data) {
   //Create HTML elements
-  const card = document.querySelector("div");
+  let card = document.querySelector("div");
        image = document.querySelector("img");
        cardInfo = document.querySelector("div");
        name = document.querySelector("h3");
@@ -86,9 +102,12 @@ function createCard(info) {
   name.textContent = data.data.name;
   username.textContent = data.data.login;
   location.textContent = `Location: ${data.data.location}`
+  profile.textContent = `Profile: ${link}`
+  
+  //profile.prepend(document.createTextNode("Profile: "));
+
   link.href = data.data.html_url;
   link.textContent = data.data.html_url;
-  profile.textContent =`Profile: ${data.data.url}`
   followers.textContent = `Followers: ${data.data.followers}`;
   following.textContent = `Following: ${data.data.following}`;
   bio.textContent = `Bio: ${data.data.bio}`;
@@ -97,11 +116,3 @@ function createCard(info) {
 
   return card;
 }
-/* List of LS Instructors Github username's: 
-  tetondan
-  dustinmyers
-  justsml
-  luishrd
-  bigknell
-*/
-document.querySelector(".cards").appendChild(card);
