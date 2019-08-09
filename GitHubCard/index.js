@@ -2,28 +2,40 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-const followersArray = [
+const instructors = [
+  "epicenedev",
+  "blevs",
   "tetondan",
   "dustinmyers",
   "justsml",
   "luishrd",
   "bigknell"];
 
- 
+
 // ${item}.forEach(function(item) {
-// followersArray.forEach(function(element) {
-// axios
-  .get(`https://api.github.com/users/epicenedev`)
-  .then(data => {
-    // const followersArray = [...data.data.followers];
-    // console.log("followersArray: ", followersArray);
-    // const myArray = [...this.state.courses.map(blabla)];
-    // const newCard = createCard(data);
-    // document.querySelector(".cards").appendChild(card);
-    console.log("Card Info: ", data.data);
+instructors.forEach(instructor => {
+axios
+  .get(`https://api.github.com/users/${instructor}`)
+  .then((res) => {
+    console.log("Card Info: ", res.data);
+    const cards = document.querySelector(".cards");
+    const card = createCard(res.data);
+    cards.append(card);
   })
-// });
-  // .catch(err => console.log("REQUEST ERROR:  ", err));
+  .catch(err => console.log("REQUEST ERROR:  ", err));
+    
+});
+// axios.get(`https://api.github.com/epicene/followers`)
+//   .then(res => res.data.slice(0, 3))
+//   .then(followers => {
+//     followers.forEach(follower => {
+//       axios.get(`https://api.github.com/users/${follower.login}`)
+//         .then(res => {
+//           const card = createCard(res.data);
+//           cards.append(card);
+//         });
+//     });
+//   });
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -65,19 +77,19 @@ const followersArray = [
 </div>
 
 */
-function createCard(data) {
+function createCard(user) {
   //Create HTML elements
-  let card = document.querySelector("div");
-       image = document.querySelector("img");
-       cardInfo = document.querySelector("div");
-       name = document.querySelector("h3");
-       username = document.querySelector("p");
-       location = document.querySelector("p");
-       profile = document.querySelector("p");
-       link = document.querySelector("a");
-       followers = document.querySelector("p");
-       following = document.querySelector("p");
-       bio = document.querySelector("p");
+  let card = document.createElement("div");
+  let image = document.createElement("img");
+  let cardInfo = document.createElement("div");
+  let name = document.createElement("h3");
+  let username = document.createElement("p");
+  let location = document.createElement("p");
+  let profile = document.createElement("p");
+  let link = document.createElement("a");
+  let followers = document.createElement("p");
+  let following = document.createElement("p");
+  let bio = document.createElement("p");
 
   //Place elements
   card.appendChild(image);
@@ -89,7 +101,7 @@ function createCard(data) {
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
-  profile.appendChild(link);
+  
 
   //Set classes
   card.classList.add("card");
@@ -98,21 +110,19 @@ function createCard(data) {
   username.classList.add("username")
 
   //Add content
-  image.src = data.data.avatar_url;
-  name.textContent = data.data.name;
-  username.textContent = data.data.login;
-  location.textContent = `Location: ${data.data.location}`
-  profile.textContent = `Profile: ${link}`
-  
-  //profile.prepend(document.createTextNode("Profile: "));
+  image.src = user.avatar_url;
+  name.textContent = user.name;
+  username.textContent = user.login;
+  location.textContent = `Location: ${user.location || "Nowhere"}`;
+  profile.textContent = `Profile: `;
 
-  link.href = data.data.html_url;
-  link.textContent = data.data.html_url;
-  followers.textContent = `Followers: ${data.data.followers}`;
-  following.textContent = `Following: ${data.data.following}`;
-  bio.textContent = `Bio: ${data.data.bio}`;
-
-
+  link.href = user.html_url;
+  link.textContent = user.html_url;
+  followers.textContent = `Followers: ${user.followers}`;
+  following.textContent = `Following: ${user.following}`;
+  bio.textContent = `Bio: ${user.bio||"none"}`;
+//MUST PLACE AFTER ADDING TEXT TO PARENT NODE OR IT WILL OVERWRITE
+  profile.appendChild(link);
 
   return card;
 }
