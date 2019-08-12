@@ -2,6 +2,40 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+const instructors = [
+  "epicenedev",
+  "blevs",
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell"];
+
+
+// ${item}.forEach(function(item) {
+instructors.forEach(instructor => {
+axios
+  .get(`https://api.github.com/users/${instructor}`)
+  .then((res) => {
+    console.log("Card Info: ", res.data);
+    const cards = document.querySelector(".cards");
+    const card = createCard(res.data);
+    cards.append(card);
+  })
+  .catch(err => console.log("REQUEST ERROR:  ", err));
+    
+});
+// axios.get(`https://api.github.com/epicene/followers`)
+//   .then(res => res.data.slice(0, 3))
+//   .then(followers => {
+//     followers.forEach(follower => {
+//       axios.get(`https://api.github.com/users/${follower.login}`)
+//         .then(res => {
+//           const card = createCard(res.data);
+//           cards.append(card);
+//         });
+//     });
+//   });
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -24,8 +58,6 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -45,11 +77,52 @@ const followersArray = [];
 </div>
 
 */
+function createCard(user) {
+  //Create HTML elements
+  let card = document.createElement("div");
+  let image = document.createElement("img");
+  let cardInfo = document.createElement("div");
+  let name = document.createElement("h3");
+  let username = document.createElement("p");
+  let location = document.createElement("p");
+  let profile = document.createElement("p");
+  let link = document.createElement("a");
+  let followers = document.createElement("p");
+  let following = document.createElement("p");
+  let bio = document.createElement("p");
 
-/* List of LS Instructors Github username's: 
-  tetondan
-  dustinmyers
-  justsml
-  luishrd
-  bigknell
-*/
+  //Place elements
+  card.appendChild(image);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+  
+
+  //Set classes
+  card.classList.add("card");
+  cardInfo.classList.add("card-info");
+  name.classList.add("name");
+  username.classList.add("username")
+
+  //Add content
+  image.src = user.avatar_url;
+  name.textContent = user.name;
+  username.textContent = user.login;
+  location.textContent = `Location: ${user.location || "Nowhere"}`;
+  profile.textContent = `Profile: `;
+
+  link.href = user.html_url;
+  link.textContent = user.html_url;
+  followers.textContent = `Followers: ${user.followers}`;
+  following.textContent = `Following: ${user.following}`;
+  bio.textContent = `Bio: ${user.bio||"none"}`;
+//MUST PLACE AFTER ADDING TEXT TO PARENT NODE OR IT WILL OVERWRITE
+  profile.appendChild(link);
+
+  return card;
+}
